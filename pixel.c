@@ -4,26 +4,43 @@
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <math.h>
 
 
 int main() {
-
-  int fd = open("pixel.ppm", O_CREAT | O_WRONLY | 0666);
-  char * line = malloc(1000);
-  char * append = malloc(10);
-  int i = 0;
-  line = "P3\n500 500\n255\n";
-  write(fd, line, sizeof(line));
-  for(;i < 255; i++) {
-    line = "0 255 ";
-    sprintf(append, "%d", 4);
-    printf("%s\n", append);
-    line = strcat(line, append);
-    printf("%s\n", line);
-    write (fd, line, sizeof(line));
+  int fd = open("pixel.ppm", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+  float r,g,b;
+  if (fd < 0) {
+    printf("bad\n");
+    printf("%s\n", strerror(errno));
   }
-  free(line);
-  free(append);
+  char line[1000];
+  int i = 0;
+  int j = 0;
+  sprintf(line, "P3\n750 750\n255\n");
+  write(fd, line, strlen(line));
+  for(;j < 750; j++) {
+    i = 0;
+    for(;i < 750; i++) {
+      if ((pow(i, 2) + pow(j, 2)) < pow(500, 2)) {
+        r = (int)sqrt(i * j);
+        g = (int)sqrt(i / (j + 1));
+      }
+      else {
+        r = i + j;
+        g = i - j;
+      }
+      b = (int)sqrt(i) * (int)(sqrt(j) + 1);
+      // printf("hi\n");
+      sprintf(line, "%d %d %d ", (int)r, (int)g, (int)b);
+      // printf("hi\n");
+      // printf("%s\n", append);
+      write (fd, line, strlen(line));
+    }
+    sprintf(line, "\n");
+    write (fd, line, strlen(line));
+  }
+  // free(line);
   close(fd);
   return 0;
 }
