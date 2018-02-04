@@ -22,8 +22,8 @@ int main() {
   for(j = 0;j < 750; j++) {
     for(i = 0;i < 750; i++) {
       if ((pow(i, 2) + pow(j, 2)) < pow(500, 2)) {
-        r = (int)sqrt(i * j);
-        g = (int)sqrt(i / (j + 1));
+        r = sqrt(i * j);
+        g = sqrt(i / (j + 1));
       }
       else {
         r = i + j;
@@ -31,6 +31,9 @@ int main() {
       }
       b = (int)sqrt(i) * (int)(sqrt(j) + 1);
       // printf("hi\n");
+      r = abs((int)r);
+      g = abs((int)g);
+      b = abs((int)b);
       sprintf(line, "%d %d %d ", (int)r, (int)g, (int)b);
       // printf("hi\n");
       // printf("%s\n", append);
