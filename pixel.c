@@ -17,11 +17,10 @@ int main() {
   char line[1000];
   int i = 0;
   int j = 0;
-  sprintf(line, "P3\n750 750\n255\n");
+  sprintf(line, "P3\n750\n750\n255\n");
   write(fd, line, strlen(line));
-  for(;j < 750; j++) {
-    i = 0;
-    for(;i < 750; i++) {
+  for(j = 0;j < 750; j++) {
+    for(i = 0;i < 750; i++) {
       if ((pow(i, 2) + pow(j, 2)) < pow(500, 2)) {
         r = (int)sqrt(i * j);
         g = (int)sqrt(i / (j + 1));
@@ -37,8 +36,7 @@ int main() {
       // printf("%s\n", append);
       write (fd, line, strlen(line));
     }
-    sprintf(line, "\n");
-    write (fd, line, strlen(line));
+    write (fd, "\n", 1);
   }
   // free(line);
   close(fd);
