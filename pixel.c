@@ -31,9 +31,9 @@ int main() {
       }
       b = (int)sqrt(i) * (int)(sqrt(j) + 1);
       // printf("hi\n");
-      r = abs((int)r);
-      g = abs((int)g);
-      b = abs((int)b);
+      r = abs((int)r) % 255;
+      g = abs((int)g) % 255;
+      b = abs((int)b) % 255;
       sprintf(line, "%d %d %d ", (int)r, (int)g, (int)b);
       // printf("hi\n");
       // printf("%s\n", append);
